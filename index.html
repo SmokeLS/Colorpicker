@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<title>Switcher</title>
+    <style>
+        #feedback { font-size: 1.4em; }
+        #selectable .ui-selecting { background: #FECA40; }
+        #selectable .ui-selected { background: #F39814; color: white; }
+        #selectable li {display: inline-block; padding: 0 20px}
+        #red, #green, #blue {
+          float: left;
+          clear: left;
+          width: 300px;
+          margin: 15px;
+        }
+        #swatch {
+          width: 120px;
+          height: 100px;
+          margin-top: 18px;
+          margin-left: 350px;
+          background-image: none;
+        }
+        .blue{
+            background: blue;
+            color: white;
+        }
+        #red .ui-slider-range { background: #ef2929; }
+        #red .ui-slider-handle { border-color: #ef2929; }
+        #green .ui-slider-range { background: #8ae234; }
+        #green .ui-slider-handle { border-color: #8ae234; }
+        #blue .ui-slider-range { background: #729fcf; }
+        #blue .ui-slider-handle { border-color: #729fcf; }
+        </style>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        $( function() {
+          function hexFromRGB(r, g, b) {
+            var hex = [
+              r.toString( 16 ),
+              g.toString( 16 ),
+              b.toString( 16 )
+            ];
+            $.each( hex, function( nr, val ) {
+              if ( val.length === 1 ) {
+                hex[ nr ] = "0" + val;
+              }
+            });
+            return hex.join( "" ).toUpperCase();
+          }
+          function refreshSwatch() {
+            var red = $( "#red" ).slider( "value" ),
+              green = $( "#green" ).slider( "value" ),
+              blue = $( "#blue" ).slider( "value" ),
+              hex = hexFromRGB( red, green, blue );
+              console.log($("button").hasClass("blue"));
+              if ($("button").hasClass("blue"))
+                $( "#swatch" ).css($("button.blue").text(), "#" + hex );
+          }
+       
+          $( "#red, #green, #blue" ).slider({
+            orientation: "horizontal",
+            range: "min",
+            max: 255,
+            value: 127,
+            slide: refreshSwatch,
+            change: refreshSwatch
+          });
+          $( "#red" ).slider( "value", 255 );
+          $( "#green" ).slider( "value", 140 );
+          $( "#blue" ).slider( "value", 60 );
+        } );
+
+        $( function() {
+            $( "#selectable" ).selectable();
+        } );
+        $(document).ready(function(){
+            $("button").on("click", function(event){
+                $("button").removeClass("blue");
+                $(this).addClass("blue");
+            });
+        });
+        </script>
+      </head>
+      <body class="ui-widget-content" style="border:0;">
+        <form onsubmit="return false">
+            <fieldset id="selectable">
+                <legend>Select</legend>
+                <button class="ui-widget-content blue">color</button>
+                <button class="ui-widget-content">background-color</button>
+            </fieldset>
+        </form>
+      <div id="red"></div>
+      <div id="green"></div>
+      <div id="blue"></div>
+       
+      <div id="swatch" class="ui-widget-content ui-corner-all">Lorem ipsum, dolor sit amet consectetur adipisicing.</div>
+     
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
